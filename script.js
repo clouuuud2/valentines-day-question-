@@ -5,6 +5,7 @@ function selectOption(option) {
 
         // Flash rainbow colors before displaying card-heart.gif
         flashRainbowColors(() => {
+            console.log("Rainbow animation finished. Hiding question and displaying card-heart.gif...");
             document.getElementById('question').style.display = 'none'; // Hide the question
             displayCardHeart(); // Show the card-heart.gif
         });
@@ -76,22 +77,23 @@ function displayCardHeart() {
         return;
     }
 
-    // Clear existing content
-    imageContainer.innerHTML = '';
+    // Use a short delay before clearing and replacing the image
+    setTimeout(() => {
+        imageContainer.innerHTML = ''; // Clear existing content
+        let cardHeartImage = new Image();
+        cardHeartImage.src = './card-heart.gif'; // Adjust path if needed
+        cardHeartImage.alt = 'Card Heart';
 
-    let cardHeartImage = new Image();
-    cardHeartImage.src = './card-heart.gif'; // Adjust path if needed
-    cardHeartImage.alt = 'Card Heart';
+        cardHeartImage.onload = () => {
+            imageContainer.appendChild(cardHeartImage);
+            document.getElementById('options').style.display = 'none'; // Hide options
+            console.log("card-heart.gif successfully loaded.");
+        };
 
-    cardHeartImage.onload = () => {
-        imageContainer.appendChild(cardHeartImage);
-        document.getElementById('options').style.display = 'none'; // Hide options
-        console.log("card-heart.gif successfully loaded.");
-    };
-
-    cardHeartImage.onerror = () => {
-        console.error("Error loading card-heart.gif. Check the file path.");
-    };
+        cardHeartImage.onerror = () => {
+            console.error("Error loading card-heart.gif. Check the file path.");
+        };
+    }, 500); // Short delay (0.5s) before clearing the container
 }
 
 // Display the initial dog.gif when the page loads
