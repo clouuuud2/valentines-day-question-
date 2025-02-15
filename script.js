@@ -3,10 +3,10 @@ function selectOption(option) {
     if (option === 'yes') {
         console.log("Yes button clicked. Flashing rainbow colors...");
 
-        // Flash rainbow colors before displaying dog-heart.gif
+        // Flash rainbow colors before displaying card-heart.gif
         flashRainbowColors(() => {
             document.getElementById('question').style.display = 'none'; // Hide the question
-            displayDogHeart(); // Show the dog-heart.gif
+            displayCardHeart(); // Show the card-heart.gif
         });
     } else if (option === 'no') {
         console.log("No button clicked. Changing text and increasing Yes button size.");
@@ -66,9 +66,9 @@ function displayDog() {
     };
 }
 
-// Function to display the dog-heart.gif
-function displayDogHeart() {
-    console.log("Attempting to display dog-heart.gif...");
+// Function to display the card-heart.gif
+function displayCardHeart() {
+    console.log("Attempting to display card-heart.gif...");
     let imageContainer = document.getElementById('image-container');
 
     if (!imageContainer) {
@@ -79,18 +79,18 @@ function displayDogHeart() {
     // Clear existing content
     imageContainer.innerHTML = '';
 
-    let dogHeartImage = new Image();
-    dogHeartImage.src = './dog-heart.gif'; // Adjust path if needed
-    dogHeartImage.alt = 'Dog Heart';
+    let cardHeartImage = new Image();
+    cardHeartImage.src = './card-heart.gif'; // Adjust path if needed
+    cardHeartImage.alt = 'Card Heart';
 
-    dogHeartImage.onload = () => {
-        imageContainer.appendChild(dogHeartImage);
+    cardHeartImage.onload = () => {
+        imageContainer.appendChild(cardHeartImage);
         document.getElementById('options').style.display = 'none'; // Hide options
-        console.log("dog-heart.gif successfully loaded.");
+        console.log("card-heart.gif successfully loaded.");
     };
 
-    dogHeartImage.onerror = () => {
-        console.error("Error loading dog-heart.gif. Check the file path.");
+    cardHeartImage.onerror = () => {
+        console.error("Error loading card-heart.gif. Check the file path.");
     };
 }
 
