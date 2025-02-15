@@ -1,80 +1,98 @@
-// script.js
-
 // Function to handle button click events
 function selectOption(option) {
-    // Check which option was clicked
     if (option === 'yes') {
-        // Flash rainbow colors
-        flashRainbowColors(function() {
+        console.log("Yes button clicked. Flashing rainbow colors...");
+
+        // Flash rainbow colors before displaying dog-heart.gif
+        flashRainbowColors(() => {
             document.getElementById('question').style.display = 'none'; // Hide the question
-            displaydogHeart(); // Display the dog-heart.gif
+            displayDogHeart(); // Show the dog-heart.gif
         });
     } else if (option === 'no') {
-        // Change text on the "No" button to "You sure?"
+        console.log("No button clicked. Changing text and increasing Yes button size.");
+
+        // Change "No" button text to "You sure?"
         document.getElementById('no-button').innerText = 'You sure?'; 
+
         // Increase font size of "Yes" button
-        var yesButton = document.getElementById('yes-button');
-        var currentFontSize = window.getComputedStyle(yesButton).getPropertyValue('font-size');
-        var newSize = parseFloat(currentFontSize) * 2; // Increase font size by  * 2px
-        yesButton.style.fontSize = newSize + 'px';
+        let yesButton = document.getElementById('yes-button');
+        let currentFontSize = parseFloat(window.getComputedStyle(yesButton).getPropertyValue('font-size'));
+        yesButton.style.fontSize = (currentFontSize * 2) + 'px'; // Double the font size
     } else {
-        // If neither "Yes" nor "No" was clicked, show an alert message
         alert('Invalid option!');
     }
 }
 
-// Function to flash rainbow colors and then execute a callback function
+// Function to flash rainbow colors and execute a callback afterward
 function flashRainbowColors(callback) {
-    var colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
-    var i = 0;
-    var interval = setInterval(function() {
+    console.log("Flashing rainbow colors...");
+    const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+    let i = 0;
+
+    let interval = setInterval(() => {
         document.body.style.backgroundColor = colors[i];
         i = (i + 1) % colors.length;
-    }, 200); // Change color every 200 milliseconds
-    setTimeout(function() {
+    }, 200); // Change color every 200ms
+
+    setTimeout(() => {
         clearInterval(interval);
         document.body.style.backgroundColor = ''; // Reset background color
-        if (callback) {
-            callback();
-        }
-    }, 2000); // Flash colors for 2 seconds
+        console.log("Rainbow effect completed.");
+        if (callback) callback();
+    }, 2000); // Stop after 2 seconds
 }
 
-// Function to display the dog.gif initially
+// Function to display the initial dog.gif
 function displayDog() {
-    // Get the container where the image will be displayed
-    var imageContainer = document.getElementById('image-container');
-    // Create a new Image element for the dog
-    var dogImage = new Image();
-    // Set the source (file path) for the dog image
-    dogImage.src = 'dog.gif'; // Assuming the dog image is named "dog.gif"
-    // Set alternative text for the image (for accessibility)
+    console.log("Displaying dog.gif...");
+    let imageContainer = document.getElementById('image-container');
+
+    if (!imageContainer) {
+        console.error("Error: 'image-container' not found in the document.");
+        return;
+    }
+
+    let dogImage = new Image();
+    dogImage.src = './dog.gif';  // Adjust path if needed
     dogImage.alt = 'Dog';
-    // When the dog image is fully loaded, add it to the image container
-    dogImage.onload = function() {
+
+    dogImage.onload = () => {
         imageContainer.appendChild(dogImage);
+        console.log("dog.gif successfully loaded.");
+    };
+
+    dogImage.onerror = () => {
+        console.error("Error loading dog.gif. Check the file path.");
     };
 }
 
 // Function to display the dog-heart.gif
 function displayDogHeart() {
-    // Clear existing content in the image container
-    document.getElementById('image-container').innerHTML = '';
-    // Get the container where the image will be displayed
-    var imageContainer = document.getElementById('image-container');
-    // Create a new Image element for the dog-heart
-    var dogHeartImage = new Image();
-    // Set the source (file path) for the dog-heart image
-    dogHeartImage.src = 'dog-heart.gif'; // Assuming the dog-heart image is named "dog-heart.gif"
-    // Set alternative text for the image (for accessibility)
+    console.log("Attempting to display dog-heart.gif...");
+    let imageContainer = document.getElementById('image-container');
+
+    if (!imageContainer) {
+        console.error("Error: 'image-container' not found in the document.");
+        return;
+    }
+
+    // Clear existing content
+    imageContainer.innerHTML = '';
+
+    let dogHeartImage = new Image();
+    dogHeartImage.src = './dog-heart.gif'; // Adjust path if needed
     dogHeartImage.alt = 'Dog Heart';
-    // When the dog-heart image is fully loaded, add it to the image container
-    dogHeartImage.onload = function() {
+
+    dogHeartImage.onload = () => {
         imageContainer.appendChild(dogHeartImage);
-        // Hide the options container
-        document.getElementById('options').style.display = 'none';
+        document.getElementById('options').style.display = 'none'; // Hide options
+        console.log("dog-heart.gif successfully loaded.");
+    };
+
+    dogHeartImage.onerror = () => {
+        console.error("Error loading dog-heart.gif. Check the file path.");
     };
 }
 
-// Display the dog.gif initially
+// Display the initial dog.gif when the page loads
 displayDog();
